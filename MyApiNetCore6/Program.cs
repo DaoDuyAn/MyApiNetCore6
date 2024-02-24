@@ -1,5 +1,7 @@
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using MyApiNetCore6.Data;
+using MyApiNetCore6.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,11 @@ builder.Services.AddCors(options => options.AddDefaultPolicy(policy
 builder.Services.AddDbContext<BookStoreContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("BookStore"));
 });
+
+builder.Services.AddAutoMapper(typeof(Program));
+
+// Life cycle DI: AddSingleton(), AddTransient(), AddScoped()
+builder.Services.AddScoped<IBookRepository, BookRepository>();
 
 var app = builder.Build();
 
