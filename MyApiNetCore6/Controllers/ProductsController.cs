@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyApiNetCore6.Models;
 using MyApiNetCore6.Repositories;
@@ -37,6 +38,7 @@ namespace MyApiNetCore6.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddNewBook(BookModel model)
         {
             try
@@ -52,6 +54,7 @@ namespace MyApiNetCore6.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> UpdateBook(int id, [FromBody] BookModel model)
         {
             if (id != model.Id)
@@ -64,6 +67,7 @@ namespace MyApiNetCore6.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteBook([FromRoute] int id)
         {
             await _bookRepo.DeleteBookAsync(id);
